@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:14.1-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=senla_user
+      - POSTGRES_PASSWORD=senla_pass
+      - POSTGRES_DB=finale
+    volumes:
+      - ./database_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    build:
+      context: app
+      dockerfile: app/Dockerfile
+    command:
+      - java -jar app.jar
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/finale
+      - SPRING_DATASOURCE_USERNAME=senla_user
+      - SPRING_DATASOURCE_PASSWORD=senla_pass
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    image: 'my-java-application'
+    ports:
+      - '8000:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
