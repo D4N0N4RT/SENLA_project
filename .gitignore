@@ -1,0 +1,15 @@
+# Ignore output
+output.txt
+# Ignore 
+**/*.bak_00*
+# Ignore
+.idea/
+out/
+*.gz
+*.iml
+target/
+HELP.md
+.mvn/wrapper/
+mvnw/
+mvnw.cmd
+**/*.jar
