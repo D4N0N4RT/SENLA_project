@@ -1,2 +1,2 @@
-cd start_docker
+cd ../docker
 docker-compose up -d
