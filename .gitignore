@@ -14,5 +14,4 @@ mvnw/
 mvnw.cmd
 **/*.jar
 **/db_data
-ERD.png
 *.tmp
