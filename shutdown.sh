@@ -1,2 +1,2 @@
-cd ../docker
+cd docker
 docker-compose down

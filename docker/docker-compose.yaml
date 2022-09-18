@@ -10,7 +10,7 @@ services:
       - POSTGRES_PASSWORD=senla_pass
       - POSTGRES_DB=finale
     volumes:
-      - ./database_data:/var/lib/postgresql/data
+      - ./db_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
@@ -18,17 +18,15 @@ services:
       timeout: 5s
       retries: 5
   app:
-    build:
-      context: app
-      dockerfile: app/Dockerfile
-    command:
-      - java -jar app.jar
+    image: adoptopenjdk:11-jre-hotspot
+    volumes:
+      - ./app/finale-0.1.jar:/app.jar
+    command: java -jar app.jar
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/finale
       - SPRING_DATASOURCE_USERNAME=senla_user
       - SPRING_DATASOURCE_PASSWORD=senla_pass
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    image: 'my-java-application'
     ports:
       - '8000:8000'
     depends_on:

@@ -32,7 +32,7 @@ public class MessageServiceTest {
     @Test
     public void create() {
         Message message = new Message();
-        message.setText("Test");
+        message.setContent("Test");
 
         User user1 = new User();
         user1.setUsername("user");
@@ -56,7 +56,7 @@ public class MessageServiceTest {
     @Test
     public void getConversation() throws EmptyResponseException {
         Message message = new Message();
-        message.setText("Test");
+        message.setContent("Test");
         message.setTime(LocalDateTime.now());
 
         User user1 = new User();

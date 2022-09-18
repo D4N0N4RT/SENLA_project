@@ -51,14 +51,15 @@ public class MessageController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> sendMessage(@RequestParam(name="email") @NotBlank String email, @RequestBody @NotBlank String text,
+    public ResponseEntity<?> sendMessage(@RequestParam(name="email") @NotBlank String email,
+                                         @RequestBody @NotBlank(message = "Сообщение не может быть пустым") String content,
                                          HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
         User user1 = (User) userService.loadUserByUsername(username);
         User user2 = (User) userService.loadUserByUsername(email);
         Message message = Message.builder().sender(user1).receiver(user2)
-                .text(text).time(LocalDateTime.now()).build();
+                .content(content).time(LocalDateTime.now()).build();
         messageService.create(message);
         return new ResponseEntity<>("Ваше сообщение отправлено", HttpStatus.CREATED);
     }

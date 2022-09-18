@@ -45,7 +45,8 @@ public class Comment {
     private LocalDateTime time;
 
     public CommentDTO toDTO() {
-        return CommentDTO.builder().author(this.user.getUsername())
+        return CommentDTO.builder().author(this.user.getName() + ' ' + this.user.getSurname()
+                        + " (" + this.user.getUsername() + ')')
                 .content(this.content).time(this.time).build();
     }
 }

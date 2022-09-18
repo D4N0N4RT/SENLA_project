@@ -221,7 +221,8 @@ public class PostController {
     }
 
     @PostMapping("/{id}/comments")
-    public ResponseEntity<?> addComment(@PathVariable(name="id") long id, @RequestBody @NotBlank String text,
+    public ResponseEntity<?> addComment(@PathVariable(name="id") long id,
+                                        @RequestBody @NotBlank(message = "Коммнтарий не может быть пустым") String text,
                                         HttpServletRequest request) throws WrongIdException {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);

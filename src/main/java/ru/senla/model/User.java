@@ -1,5 +1,6 @@
 package ru.senla.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,6 +56,7 @@ public class User implements UserDetails {
     @Column(name = "activity")
     private boolean isActive;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true,

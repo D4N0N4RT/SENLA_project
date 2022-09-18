@@ -68,7 +68,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody @Valid AuthDTO request) throws AuthenticationException {
+    public ResponseEntity<?> authenticate(@RequestBody @Valid AuthDTO request) throws UsernameNotFoundException {
         String username = request.getUsername();
         manager.authenticate(new UsernamePasswordAuthenticationToken(username, request.getPassword()));
         User user = (User) userService.loadUserByUsername(request.getUsername());
@@ -82,13 +82,15 @@ public class AuthController {
     @PostMapping("/edit")
     public ResponseEntity<?> editProfile(@RequestBody UpdateUserDTO dto, HttpServletRequest request)
             throws PasswordCheckException {
-        checkDTO(dto);
+        String pass = checkDTO(dto);
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
         User user = (User) userService.loadUserByUsername(username);
         userMapper.updateUserFromDto(dto, user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.update(user);
+        if (pass != null) {
+            user.setPassword(pass);
+            userService.update(user);
+        }
         return new ResponseEntity<>("Данные вашего профиля обновлены", HttpStatus.OK);
     }
 
@@ -98,7 +100,7 @@ public class AuthController {
         handler.logout(request, response, null);
     }
 
-    public void checkDTO(IUserDTO dto) throws PasswordCheckException {
+    public String checkDTO(IUserDTO dto) throws PasswordCheckException {
         if (dto.getPassword() != null) {
             String CHECK = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+)[a-zA-Z0-9_-]{8,}$";
             Pattern pattern = Pattern.compile(CHECK);
@@ -107,6 +109,8 @@ public class AuthController {
                 throw new PasswordCheckException("Пароль должен содержать как миниму одну строчную букву, " +
                         "одну заглавную букву и одну цифру, а также быть не менне 8 символов в длину.");
             }
+            return passwordEncoder.encode(dto.getPassword());
         }
+        return null;
     }
 }

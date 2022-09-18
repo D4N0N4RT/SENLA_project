@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class MessageDTO {
     private String sender;
     private String receiver;
-    private String text;
+    private String content;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss dd-MM-yyyy")
     private LocalDateTime time;
 }

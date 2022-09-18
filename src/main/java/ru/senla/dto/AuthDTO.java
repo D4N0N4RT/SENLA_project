@@ -6,8 +6,8 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class AuthDTO {
-    @NotBlank
+    @NotBlank(message = "Почта (имя пользователя) не может быть пустой")
     private String username;
-    @NotBlank
+    @NotBlank(message = "Пароль не может быть пустым")
     private String password;
 }

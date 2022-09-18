@@ -23,7 +23,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
     private String SECRET = "asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4";
-    private final long VALIDITY = 60 * 60;
+    private final long VALIDITY = 24 * 60 * 60;
     private final String header = "Authorization";
 
     private Key hmacKey;

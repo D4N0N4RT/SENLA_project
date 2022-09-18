@@ -8,6 +8,7 @@ import ru.senla.model.Post;
 import ru.senla.model.User;
 
 import java.util.List;
+
 @Repository
 @Transactional(readOnly = true)
 public interface CommentRepository extends JpaRepository<Comment, Long> {

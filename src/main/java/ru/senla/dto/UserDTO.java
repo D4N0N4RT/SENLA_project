@@ -4,19 +4,26 @@ import lombok.Data;
 import ru.senla.model.Role;
 import ru.senla.model.User;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 public class UserDTO implements IUserDTO {
     @NotBlank(message = "Почта (имя пользователя) не может быть пустой")
+    @Max(value = 50, message = "Почта не может превышать 50 символов")
     private String username;
     @NotBlank(message = "Пароль не может быть пустым")
+    @Max(value = 255, message = "Пароль не может превышать 255 символов")
     private String password;
     @NotBlank(message = "Имя не может быть пустым")
+    @Max(value = 50, message = "Имя не может превышать 50 символов")
     private String name;
     @NotBlank(message = "Фамилия не может быть пустой")
+    @Max(value = 75, message = "Фамилия не может превышать 75 символов")
     private String surname;
     @NotBlank(message = "Номер телефона не может отсутствовать")
+    @Size(min = 10, max = 10, message = "Номер телефона должен содержать 10 цифр")
     private String phone;
 
     public User toUser() {

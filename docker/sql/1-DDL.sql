@@ -1,4 +1,4 @@
-CREATE EXTENSION dblink;
+/*CREATE EXTENSION dblink;
 
 CREATE DATABASE finale;
 
@@ -15,9 +15,11 @@ $do$
 $do$;*/
 /*CREATE USER senla_user WITH ENCRYPTED PASSWORD 'password';*/
 CREATE USER senla_user WITH PASSWORD 'senla_pass';
-GRANT ALL PRIVILEGES ON DATABASE finale TO senla_user;
+GRANT ALL PRIVILEGES ON DATABASE finale TO senla_user;*/
 
-\connect finale
+/*\connect finale*/
+
+\c finale;
 
 CREATE SEQUENCE IF NOT EXISTS posts_id_seq
     INCREMENT 1
@@ -59,10 +61,9 @@ ALTER TABLE users OWNER TO senla_user;
 
 CREATE TABLE IF NOT EXISTS posts
 (
-    id BIGSERIAL NOT NULL PRIMARY KEY
-        DEFAULT nextval('posts_id_seq'),
+    id BIGSERIAL NOT NULL PRIMARY KEY,
     user_email VARCHAR(50),
-    title VARCHAR(50),
+    title VARCHAR(100),
     description TEXT,
     price DECIMAL(12,2),
     promotion DECIMAL(12,2),
@@ -79,8 +80,7 @@ ALTER SEQUENCE posts_id_seq OWNED BY posts.id;
 
 CREATE TABLE IF NOT EXISTS comments
 (
-    id BIGSERIAL NOT NULL PRIMARY KEY
-        DEFAULT nextval('comments_id_seq'),
+    id BIGSERIAL NOT NULL PRIMARY KEY,
     user_email VARCHAR(50),
     post_id BIGSERIAL,
     "content" TEXT,
@@ -95,8 +95,7 @@ ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
 
 CREATE TABLE IF NOT EXISTS messages
 (
-    id BIGSERIAL NOT NULL PRIMARY KEY
-        DEFAULT nextval('messages_id_seq'),
+    id BIGSERIAL NOT NULL PRIMARY KEY,
     sender_email VARCHAR(50),
     receiver_email VARCHAR(50),
     "content" TEXT,

@@ -1,5 +1,6 @@
 package ru.senla.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +36,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postsIdSeq")
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_email")
     private User user;

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class GetPostDTO {
     private long id;
     private String title;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Category category;
     private double price;
     private String userEmail;

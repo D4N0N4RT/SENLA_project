@@ -34,7 +34,7 @@ public class PostService {
         log.info("Find all posts w/o order or filter");
         List<Post> posts = postRepository.findAllBySoldOrderByPromotionDescRatingDesc(false);
         if (posts.isEmpty())
-            throw new EmptyResponseException("На данный момент ни одного размещенного объявления");
+            throw new EmptyResponseException("На данный момент нет ни одного размещенного объявления");
         return posts;
     }
 
@@ -50,7 +50,7 @@ public class PostService {
         else
             posts = postRepository.findAllBySoldOrderByPostingDateDescPromotionDescRatingDesc(false);
         if (posts.isEmpty())
-            throw new EmptyResponseException("На данный момент ни одного размещенного объявления");
+            throw new EmptyResponseException("На данный момент нет ни одного размещенного объявления");
         return posts;
     }
 
@@ -58,7 +58,7 @@ public class PostService {
         log.info("Find all posts with certain category {}", category.name());
         List<Post> posts = postRepository.findAllByCategoryAndSoldOrderByPromotionDescRatingDesc(category, false);
         if (posts.isEmpty())
-            throw new EmptyResponseException("Список объявлений из данной категории пуст");
+            throw new EmptyResponseException("Список объявлений по данной категории пуст");
         return posts;
     }
 

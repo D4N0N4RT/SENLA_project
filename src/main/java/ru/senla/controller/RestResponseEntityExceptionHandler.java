@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,8 @@ import ru.senla.exception.JwtAuthException;
 import ru.senla.exception.PasswordCheckException;
 import ru.senla.exception.WrongAuthorityException;
 import ru.senla.exception.WrongIdException;
+
+import java.util.List;
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -40,9 +43,17 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(),
                 HttpStatus.CONFLICT, request);
     }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleExceptionInternal(ex, "Ошибка валидации, проверьте введенные данные", new HttpHeaders(),
+        BindingResult result = ex.getBindingResult();
+        List<FieldError> errors = result.getFieldErrors();
+        StringBuilder error = new StringBuilder("Ошибка валидации, проверьте введенные данные\nОшибка: "
+                + errors.get(0).getDefaultMessage());
+        for (int i = 1; i < errors.size(); i++) {
+            error.append(", ").append(errors.get(i).getDefaultMessage());
+        }
+        return handleExceptionInternal(ex, error, new HttpHeaders(),
                 HttpStatus.BAD_REQUEST, request);
     }
 }

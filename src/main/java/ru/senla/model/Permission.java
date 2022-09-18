@@ -1,7 +1,7 @@
 package ru.senla.model;
 
 public enum Permission {
-    USERS_READ("users:read"),
+    USERS_PERMISSION("users:permission"),
     ADMIN_PERMISSION("admin:permission");
 
     private final String permission;

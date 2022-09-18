@@ -41,13 +41,14 @@ public class Message {
     @JoinColumn(name="receiver_email")
     private User receiver;
 
-    private String text;
+    private String content;
 
     private LocalDateTime time;
 
     public MessageDTO toDTO() {
-        return MessageDTO.builder().sender(this.sender.getUsername())
-                .receiver(this.receiver.getUsername())
-                .text(this.text).time(this.time).build();
+        return MessageDTO.builder().sender(this.sender.getName() + ' ' + this.sender.getSurname()
+                        + " (" + this.sender.getUsername() + ')').receiver(this.receiver.getName()
+                        + ' ' + this.receiver.getSurname() + " (" + this.receiver.getUsername() + ')')
+                .content(this.content).time(this.time).build();
     }
 }
