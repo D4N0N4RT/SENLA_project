@@ -16,6 +16,7 @@ import ru.senla.dto.CreatePostDTO;
 import ru.senla.dto.GetPostDTO;
 import ru.senla.dto.UpdatePostDTO;
 import ru.senla.exception.EmptyResponseException;
+import ru.senla.exception.PriceValidException;
 import ru.senla.exception.WrongAuthorityException;
 import ru.senla.exception.WrongIdException;
 import ru.senla.mapper.PostMapper;
@@ -159,13 +160,15 @@ public class PostController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<?> editPost(@PathVariable(name="id") long id, @RequestBody UpdatePostDTO dto, HttpServletRequest request)
-            throws WrongIdException, WrongAuthorityException {
+    public ResponseEntity<?> editPost(@PathVariable(name="id") long id, @RequestBody @Valid UpdatePostDTO dto, HttpServletRequest request)
+            throws WrongIdException, WrongAuthorityException, PriceValidException {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
         User user = (User) userService.loadUserByUsername(username);
         Post post = postService.findById(id).orElseThrow(() -> new WrongIdException("Неправльный id"));
         if (Objects.equals(post.getUser().getUsername(), user.getUsername())) {
+            if (dto.getPrice() < 1)
+                throw new PriceValidException("Ошибка валидации, проверьте введенные данные\nОшибка: Цена должна быть не меньше 1");
             postMapper.updatePostFromDto(dto, post);
             postService.update(post);
             return new ResponseEntity<>("Данные объявления обновлены", HttpStatus.OK);
@@ -222,7 +225,7 @@ public class PostController {
 
     @PostMapping("/{id}/comments")
     public ResponseEntity<?> addComment(@PathVariable(name="id") long id,
-                                        @RequestBody @NotBlank(message = "Коммнтарий не может быть пустым") String text,
+                                        @RequestBody @Valid @NotBlank(message = "Комментарий не может быть пустым") String text,
                                         HttpServletRequest request) throws WrongIdException {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);

@@ -18,6 +18,7 @@ import ru.senla.service.MessageService;
 import ru.senla.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,7 +53,7 @@ public class MessageController {
 
     @PostMapping("")
     public ResponseEntity<?> sendMessage(@RequestParam(name="email") @NotBlank String email,
-                                         @RequestBody @NotBlank(message = "Сообщение не может быть пустым") String content,
+                                         @RequestBody @Valid @NotBlank(message = "Сообщение не может быть пустым") String content,
                                          HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);

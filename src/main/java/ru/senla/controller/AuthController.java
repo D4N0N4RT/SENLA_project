@@ -80,7 +80,7 @@ public class AuthController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<?> editProfile(@RequestBody UpdateUserDTO dto, HttpServletRequest request)
+    public ResponseEntity<?> editProfile(@RequestBody @Valid UpdateUserDTO dto, HttpServletRequest request)
             throws PasswordCheckException {
         String pass = checkDTO(dto);
         String token = jwtTokenProvider.resolveToken(request);

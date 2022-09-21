@@ -16,6 +16,7 @@ import ru.senla.exception.DuplicateUsernameException;
 import ru.senla.exception.EmptyResponseException;
 import ru.senla.exception.JwtAuthException;
 import ru.senla.exception.PasswordCheckException;
+import ru.senla.exception.PriceValidException;
 import ru.senla.exception.WrongAuthorityException;
 import ru.senla.exception.WrongIdException;
 
@@ -38,7 +39,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler(value = { WrongAuthorityException.class, PasswordCheckException.class,
-            DuplicateUsernameException.class })
+            DuplicateUsernameException.class, PriceValidException.class})
     protected ResponseEntity<Object> handleConflictExceptions(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(),
                 HttpStatus.CONFLICT, request);
