@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ru.senla.model.Permission;
 import ru.senla.security.JwtConfigurer;
 import ru.senla.service.UserService;
@@ -19,6 +20,7 @@ import ru.senla.service.UserService;
 @Configuration
 @EnableWebSecurity
 @EnableJpaRepositories(basePackages = "ru.senla.*")
+@EnableTransactionManagement
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtConfigurer jwtConfigurer;
     private final PasswordEncoder passwordEncoder;

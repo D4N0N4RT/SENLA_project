@@ -89,8 +89,8 @@ public class AuthController {
         userMapper.updateUserFromDto(dto, user);
         if (pass != null) {
             user.setPassword(pass);
-            userService.update(user);
         }
+        userService.update(user);
         return new ResponseEntity<>("Данные вашего профиля обновлены", HttpStatus.OK);
     }
 
