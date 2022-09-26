@@ -40,34 +40,32 @@ public class UserServiceTest {
 
     @Test
     public void create() {
+        //Arrange
         User user = new User();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("pass"));
-
+        //Act
         underTest.create(user);
-
         ArgumentCaptor<User> captor =
                 ArgumentCaptor.forClass(User.class);
-
+        //Assert
         Mockito.verify(userRepository).save(captor.capture());
-
         User captured = captor.getValue();
         Assertions.assertEquals(captured, user);
     }
 
     @Test
     public void update() {
+        //Arrange
         User user = new User();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("pass"));
-
+        //Act
         underTest.update(user);
-
         ArgumentCaptor<User> captor =
                 ArgumentCaptor.forClass(User.class);
-
+        //Assert
         Mockito.verify(userRepository).save(captor.capture());
-
         User captured = captor.getValue();
         Assertions.assertEquals(captured, user);
     }

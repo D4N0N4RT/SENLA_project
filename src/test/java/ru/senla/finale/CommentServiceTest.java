@@ -30,39 +30,35 @@ public class CommentServiceTest {
 
     @Test
     public void create() {
+        //Arrange
         Comment comment = new Comment();
         comment.setContent("Test");
-
         Post post = new Post();
         post.setId(1L);
         post.setTitle("Test");
         comment.setPost(post);
-
+        //Act
         underTest.create(comment);
-
-        ArgumentCaptor<Comment> captor =
-                ArgumentCaptor.forClass(Comment.class);
-
+        ArgumentCaptor<Comment> captor = ArgumentCaptor.forClass(Comment.class);
+        //Assert
         Mockito.verify(commentRepository).save(captor.capture());
-
         Comment captured = captor.getValue();
         Assertions.assertEquals(captured, comment);
     }
 
     @Test
     public void findByPost() throws EmptyResponseException {
+        //Arrange
         Comment comment = new Comment();
         comment.setContent("Test");
-
         Post post = new Post();
         post.setId(1L);
         post.setTitle("Test");
         comment.setPost(post);
-
         Mockito.when(commentRepository.findAllByPost(post)).thenReturn(new ArrayList<>(List.of(comment)));
-
+        //Act
         List<Comment> check = underTest.findAllByPost(post);
-
+        //Assert
         Mockito.verify(commentRepository).findAllByPost(post);
         Assertions.assertNotNull(check);
         Assertions.assertEquals(1, check.size());
