@@ -2,6 +2,7 @@ package ru.senla.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.senla.exception.EmptyResponseException;
@@ -9,7 +10,6 @@ import ru.senla.model.Message;
 import ru.senla.model.User;
 import ru.senla.repository.MessageRepository;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -22,14 +22,14 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Message> getConversation(User user1, User user2) throws EmptyResponseException {
         log.info("Get conversation between user {} and user {}", user1.getUsername(), user2.getUsername());
-        List<Message> messages = messageRepository.findAllBySenderAndReceiver(user1, user2);
-        List<Message> messages1 = messageRepository.findAllBySenderAndReceiver(user2, user1);
-        if (messages.isEmpty() && messages1.isEmpty())
+        List<Message> messages = messageRepository.findConversation(user1, user2, Sort.by("time"));
+        if (messages.isEmpty())
             throw new EmptyResponseException("Диалог с данным пользователем пуст");
-        messages.addAll(messages1);
-        messages.sort(Comparator.comparing(Message::getTime));
+        /*messages.addAll(messages1);
+        messages.sort(Comparator.comparing(Message::getTime));*/
         return messages;
     }
 

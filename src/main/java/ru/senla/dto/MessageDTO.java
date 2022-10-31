@@ -2,11 +2,11 @@ package ru.senla.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Setter
 @Builder
 public class MessageDTO {
     private String sender;

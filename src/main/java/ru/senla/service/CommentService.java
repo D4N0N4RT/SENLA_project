@@ -23,11 +23,13 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
+    @Transactional(readOnly = true)
     public Optional<Comment> findById(long id) {
         log.info("Find comment by id = {}", id);
         return commentRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Comment> findAllByUser(User user) throws EmptyResponseException {
         log.info("Find all comments by user = {}", user.getUsername());
         List<Comment> comments = commentRepository.findAllByUser(user);
@@ -36,6 +38,7 @@ public class CommentService {
         return comments;
     }
 
+    @Transactional(readOnly = true)
     public List<Comment> findAllByPost(Post post) throws EmptyResponseException {
         log.info("Find all comments under post = {}", post.getId());
         List<Comment> comments = commentRepository.findAllByPost(post);

@@ -25,11 +25,13 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
+    @Transactional(readOnly = true)
     public Optional<Post> findById(long id) {
         log.info("Find post by id = {}", id);
         return postRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByOrderByPromotionDesc() throws EmptyResponseException {
         log.info("Find all posts w/o order or filter");
         List<Post> posts = postRepository.findAllBySoldOrderByPromotionDescRatingDesc(false);
@@ -38,6 +40,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllFilter(String field, String option) throws EmptyResponseException {
         log.info("Find all posts with filter by {}", field);
         List<Post> posts;
@@ -54,6 +57,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByCategory(Category category) throws EmptyResponseException {
         log.info("Find all posts with certain category {}", category.name());
         List<Post> posts = postRepository.findAllByCategoryAndSoldOrderByPromotionDescRatingDesc(category, false);
@@ -62,6 +66,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByUserAndSold(User user, boolean sold) throws EmptyResponseException {
         log.info("Find all posts by user {} and which {} sold", user.getUsername(), sold ? "are" : "are not");
         List<Post> posts = postRepository.findAllByUserAndSoldOrderByPromotionDesc(user, sold);
@@ -72,6 +77,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByPriceLessThan(double price) throws EmptyResponseException {
         log.info("Find all posts with price less than {}", price);
         List<Post> posts = postRepository.findAllBySoldAndPriceLessThanOrderByPromotionDescRatingDesc(false, price);
@@ -80,6 +86,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByPriceGreaterThan(double price) throws EmptyResponseException {
         log.info("Find all posts with price greater than {}", price);
         List<Post> posts = postRepository.findAllBySoldAndPriceGreaterThanOrderByPromotionDescRatingDesc(false, price);
@@ -88,6 +95,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByPostingDateIsBefore(LocalDate postingDate) throws EmptyResponseException {
         log.info("Find all posts with posting date is before {}", postingDate);
         List<Post> posts = postRepository.findAllBySoldAndPostingDateIsBeforeOrderByPromotionDescRatingDesc(false, postingDate);
@@ -96,6 +104,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByPostingDateIsAfter(LocalDate postingDate) throws EmptyResponseException {
         log.info("Find all posts with posting date is after {}", postingDate);
         List<Post> posts = postRepository.findAllBySoldAndPostingDateIsAfterOrderByPromotionDescRatingDesc(false, postingDate);
@@ -104,6 +113,7 @@ public class PostService {
         return posts;
     }
 
+    @Transactional(readOnly = true)
     public List<Post> findAllByTitleContainingIgnoreCase(String title) throws EmptyResponseException {
         log.info("Find all by title containing string '{}'", title);
         List<Post> posts = postRepository.findAllBySoldAndTitleContainingIgnoreCaseOrderByPromotionDescRatingDesc(false, title);

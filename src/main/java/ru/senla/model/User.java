@@ -14,8 +14,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,14 +31,15 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class User implements UserDetails {
-    /*@SequenceGenerator(name = "usersIdSeq",
-            sequenceName = "users_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usersIdSeq")
-    private Long id;*/
-
     @Id
+    /*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_sequence")
+    @SequenceGenerator(name = "users_id_sequence",
+            sequenceName = "users_id_sequence",
+            allocationSize = 1
+    )*/
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "email", unique = true)
     private String username;
 

@@ -37,24 +37,24 @@ public class AdminController {
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
         List<User> users = userService.getAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.FOUND);
     }
 
-    @DeleteMapping("/users/delete")
+    @DeleteMapping("/users")
     public ResponseEntity<?> deleteUser(@RequestParam @NotBlank String email) {
         User user = (User) userService.loadUserByUsername(email);
         userService.delete(user);
         return new ResponseEntity<>("Пользователь удален", HttpStatus.OK);
     }
 
-    @DeleteMapping("/comments/delete/{id}")
+    @DeleteMapping("/comments/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable(name = "id") long id) throws WrongIdException {
         Comment comment = commentService.findById(id).orElseThrow(() -> new WrongIdException("Неправльный id"));
         commentService.delete(comment);
         return new ResponseEntity<>("Комментарий удален", HttpStatus.OK);
     }
 
-    @DeleteMapping("/posts/delete/{id}")
+    @DeleteMapping("/posts/{id}")
     public ResponseEntity<?> deletePost(@PathVariable(name = "id") long id) throws WrongIdException {
         Post post = postService.findById(id).orElseThrow(() -> new WrongIdException("Неправльный id"));
         postService.delete(post);

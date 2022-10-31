@@ -55,6 +55,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             error.append(", ").append(errors.get(i).getDefaultMessage());
         }
         return handleExceptionInternal(ex, error, new HttpHeaders(),
-                HttpStatus.BAD_REQUEST, request);
+                HttpStatus.UNSUPPORTED_MEDIA_TYPE, request);
     }
 }

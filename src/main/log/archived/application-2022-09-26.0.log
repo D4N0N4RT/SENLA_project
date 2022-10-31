@@ -1,0 +1,19 @@
+2022-09-26 11:00:41,552 INFO   INFO  r.s.s.CommentService: Write comment under post = 1
+2022-09-26 11:00:41,656 INFO   INFO  r.s.s.CommentService: Find all comments under post = 1
+2022-09-26 11:02:23,199 INFO   INFO  r.s.s.UserService: Create new user with username user
+2022-09-26 11:02:23,275 INFO   INFO  r.s.s.UserService: Update profile info of user with username user
+2022-09-26 11:02:23,297 INFO   INFO  r.s.s.UserService: Find user with username user
+2022-09-26 11:02:50,951 INFO   INFO  r.s.s.PostService: Find all posts with posting date is after 2022-09-03
+2022-09-26 11:02:51,017 INFO   INFO  r.s.s.PostService: Find all posts with posting date is before 2022-09-13
+2022-09-26 11:02:51,029 INFO   INFO  r.s.s.PostService: Create new post
+2022-09-26 11:02:51,041 INFO   INFO  r.s.s.PostService: Find all posts w/o order or filter
+2022-09-26 11:02:51,045 INFO   INFO  r.s.s.PostService: Update post with id 1
+2022-09-26 11:02:51,053 INFO   INFO  r.s.s.PostService: Find all posts with filter by price
+2022-09-26 11:02:51,053 INFO   INFO  r.s.s.PostService: Find all posts with filter by postingDate
+2022-09-26 11:02:51,063 INFO   INFO  r.s.s.PostService: Find all posts with price greater than 500.0
+2022-09-26 11:02:51,071 INFO   INFO  r.s.s.PostService: Find all posts with price less than 1500.0
+2022-09-26 11:02:51,075 INFO   INFO  r.s.s.PostService: Find all posts with certain category WORK
+2022-09-26 11:02:51,083 INFO   INFO  r.s.s.PostService: Update rating of posts from user - User
+2022-09-26 11:02:51,091 INFO   INFO  r.s.s.PostService: Find all posts by user User and which are not sold
+2022-09-26 11:03:31,410 INFO   INFO  r.s.s.MessageService: Get conversation between user user and user user2
+2022-09-26 11:03:31,472 INFO   INFO  r.s.s.MessageService: Send message to user user2 by user user

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,7 +66,7 @@ public class PostController {
         return new ResponseEntity<>(dtos, HttpStatus.FOUND);
     }
 
-    @GetMapping("/user/sold")
+    @GetMapping("/by_user/sold")
     public ResponseEntity<?> getSoldPostsByUser(@RequestParam(name="email") @NotBlank String email) throws EmptyResponseException {
         User user = (User) userService.loadUserByUsername(email);
         List<Post> posts = postService.findAllByUserAndSold(user, true);
@@ -73,7 +74,7 @@ public class PostController {
         return new ResponseEntity<>(dtos, HttpStatus.FOUND);
     }
 
-    @GetMapping("/user/available")
+    @GetMapping("/by_user/available")
     public ResponseEntity<?> getAvailablePostsByUser(@RequestParam(name="email") @NotBlank String email) throws EmptyResponseException {
         User user = (User) userService.loadUserByUsername(email);
         List<Post> posts = postService.findAllByUserAndSold(user, false);
@@ -134,7 +135,7 @@ public class PostController {
         return new ResponseEntity<>(dto, HttpStatus.FOUND);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<?> createPost(@RequestBody @Valid CreatePostDTO dto, HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
@@ -144,7 +145,7 @@ public class PostController {
         return new ResponseEntity<>("Ваше объявление создано", HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable(name="id") long id, HttpServletRequest request)
             throws WrongIdException, WrongAuthorityException {
         String token = jwtTokenProvider.resolveToken(request);
@@ -159,7 +160,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/edit/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> editPost(@PathVariable(name="id") long id, @RequestBody @Valid UpdatePostDTO dto, HttpServletRequest request)
             throws WrongIdException, WrongAuthorityException, PriceValidException {
         String token = jwtTokenProvider.resolveToken(request);

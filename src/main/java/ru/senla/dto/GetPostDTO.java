@@ -2,12 +2,12 @@ package ru.senla.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Setter;
 import ru.senla.model.Category;
 
 import java.time.LocalDate;
 
-@Data
+@Setter
 @Builder
 public class GetPostDTO {
     private long id;
