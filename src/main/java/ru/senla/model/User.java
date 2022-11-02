@@ -32,12 +32,12 @@ import java.util.List;
 @Builder
 public class User implements UserDetails {
     @Id
-    /*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_sequence")
-    @SequenceGenerator(name = "users_id_sequence",
-            sequenceName = "users_id_sequence",
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
+    @SequenceGenerator(name = "users_id_seq",
+            sequenceName = "users_id_seq",
             allocationSize = 1
-    )*/
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    )
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "email", unique = true)

@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.senla.model.User;
 import ru.senla.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
@@ -26,7 +27,7 @@ public class UserRepositoryTest {
 
 
     @Test
-    void testBootstrapping() throws Exception {
+    void testBootstrapping() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Assertions.assertNull(us.getId());
         em.persist(us);
@@ -39,6 +40,36 @@ public class UserRepositoryTest {
         Assertions.assertNull(us.getId());
         underTest.save(us);
         Assertions.assertNotNull(us.getId());
+    }
+
+    @Test
+    void testUpdate() {
+        User us = User.builder().username("mail@mail.ru").password("pass").build();
+        Assertions.assertNull(us.getId());
+        underTest.save(us);
+        Assertions.assertNotNull(us.getId());
+
+        us.setPassword("pass2");
+        underTest.save(us);
+
+        User user = underTest.findById(1L).get();
+
+        Assertions.assertEquals(user.getPassword(), "pass2");
+        Assertions.assertEquals(user.getUsername(), "mail@mail.ru");
+    }
+
+    @Test
+    void testDelete() {
+        User us = User.builder().username("mail@mail.ru").password("pass").build();
+        Assertions.assertNull(us.getId());
+        underTest.save(us);
+        Assertions.assertNotNull(us.getId());
+
+        underTest.delete(us);
+
+        List<User> check = underTest.findAll();
+
+        Assertions.assertEquals(check.size(), 0);
     }
 
     @Test

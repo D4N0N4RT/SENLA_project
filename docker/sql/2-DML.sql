@@ -1,9 +1,9 @@
 INSERT INTO users
-VALUES ('admin', '$2a$10$rWFD3BMbMcOE2TskZNVzQO9U4.nRenti5/zuFc6rThTfzZPTMx0li',
+VALUES (1, 'admin', '$2a$10$rWFD3BMbMcOE2TskZNVzQO9U4.nRenti5/zuFc6rThTfzZPTMx0li',
         'Admin', 'Admin', '0123456789', 0, 'ADMIN', true),
-       ('mail@mail.ru', '$2a$10$ESA8kkc91VoK1V/N/jT2luZNobYPXVzwJdVvq53O3aOwcnr/1qQ9m',
+       (2, 'mail@mail.ru', '$2a$10$ESA8kkc91VoK1V/N/jT2luZNobYPXVzwJdVvq53O3aOwcnr/1qQ9m',
         'Михаил', 'Егоров', '9032276404', 2, 'USER', true),
-       ('mail@mail.com', '$2a$10$pmNufdtB89zaQJXCn0Mn/e4egO1i8Gc7TVV7Ey4Cf2GK3LScdDUGC',
+       (3, 'mail@mail.com', '$2a$10$pmNufdtB89zaQJXCn0Mn/e4egO1i8Gc7TVV7Ey4Cf2GK3LScdDUGC',
         'Елена', 'Павлова', '9972340128', 0, 'USER', true);
 
 /*INSERT INTO posts (user_email, title, description, price, promotion, sold, posting_date, category, rating)

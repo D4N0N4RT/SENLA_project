@@ -32,11 +32,9 @@ public class MessageRepositoryTest {
     }
 
     @Test
-    void testBootstrapping() throws Exception {
+    void testBootstrapping() {
         User us1 = User.builder().username("mail@mail.ru").password("pass").build();
         User us2 = User.builder().username("mail2@mail.ru").password("pass").build();
-        //em.persist(us1);
-        //em.persist(us2);
         Message mes = Message.builder().sender(us1).receiver(us2).content("test")
                         .time(LocalDateTime.now()).build();
         Assertions.assertNull(mes.getId());
@@ -45,11 +43,9 @@ public class MessageRepositoryTest {
     }
 
     @Test
-    void testCreate() throws Exception {
+    void testSave() {
         User us1 = User.builder().username("mail@mail.ru").password("pass").build();
         User us2 = User.builder().username("mail2@mail.ru").password("pass").build();
-        //em.persist(us1);
-        //em.persist(us2);
         Message mes = Message.builder().sender(us1).receiver(us2).content("test")
                 .time(LocalDateTime.now()).build();
         Assertions.assertNull(mes.getId());
