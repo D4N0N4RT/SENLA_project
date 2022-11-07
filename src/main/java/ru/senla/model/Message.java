@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.senla.dto.MessageDTO;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,7 @@ public class Message {
             allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "messages_id_seq")
+    @Column(name = "id", updatable = false)
     //@GeneratedValue(strategy = GenerationType.IDENTITY) // For tests
     private Long id;
 

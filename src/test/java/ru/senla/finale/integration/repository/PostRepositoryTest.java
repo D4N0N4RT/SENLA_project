@@ -1,4 +1,4 @@
-package ru.senla.finale.unit.repository;
+package ru.senla.finale.integration.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,6 @@ import ru.senla.repository.PostRepository;
 import ru.senla.repository.UserRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ru.senla.model.Category.ESTATE;

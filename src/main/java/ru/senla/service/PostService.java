@@ -48,7 +48,7 @@ public class PostService {
             posts = postRepository.findAllBySoldOrderByPriceAscPromotionDescRatingDesc(false);
         else if (Objects.equals(field, "price") && Objects.equals(option, "desc"))
             posts = postRepository.findAllBySoldOrderByPriceDescPromotionDescRatingDesc(false);
-        else if (Objects.equals(field, "postingDate") && Objects.equals(option, "asc"))
+        else if (Objects.equals(field, "posting date") && Objects.equals(option, "asc"))
            posts = postRepository.findAllBySoldOrderByPostingDateAscPromotionDescRatingDesc(false);
         else
             posts = postRepository.findAllBySoldOrderByPostingDateDescPromotionDescRatingDesc(false);

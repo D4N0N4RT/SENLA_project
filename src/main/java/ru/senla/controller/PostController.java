@@ -1,6 +1,7 @@
 package ru.senla.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -111,7 +112,9 @@ public class PostController {
     }
 
     @GetMapping("/filter/date/{option}")
-    public ResponseEntity<?> getAllFilterDate(@RequestParam(name="date") LocalDate date,
+    public ResponseEntity<?> getAllFilterDate(@RequestParam(name="date")
+                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                          LocalDate date,
                                               @PathVariable(name="option") String option) throws EmptyResponseException {
         List<Post> posts;
         if (Objects.equals(option, "before"))

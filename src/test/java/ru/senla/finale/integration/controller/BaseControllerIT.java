@@ -117,7 +117,7 @@ public class BaseControllerIT {
 
         Post post1 = Post.builder().id(1L).title("Test 1").description("T1")
                 .category(Category.ESTATE).price(1000).sold(false).rating(10).promotion(50)
-                .postingDate(LocalDate.now().minusDays(5)).user(us1).build();
+                .postingDate(LocalDate.now().plusDays(5)).user(us1).build();
         Post post2 = Post.builder().id(2L).title("Test 2").description("T2")
                 .category(Category.TRANSPORT).price(500).sold(false).rating(10).promotion(100)
                 .postingDate(LocalDate.now().plusDays(3)).user(us1).build();

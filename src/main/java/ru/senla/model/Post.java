@@ -29,11 +29,12 @@ import java.time.LocalDate;
 @Builder
 public class Post {
     @Id
-    @SequenceGenerator(name = "postsIdSeq",
+    @SequenceGenerator(name = "posts_id_seq",
             sequenceName = "posts_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postsIdSeq")
+    @Column(name = "id", updatable = false)
     //@GeneratedValue(strategy = GenerationType.IDENTITY) // For tests
     private Long id;
 

@@ -1,6 +1,5 @@
 package ru.senla.finale.integration.controller;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -130,7 +129,7 @@ public class PostControllerIT extends BaseControllerIT {
     public void shouldBuyPostAndRejectPurchaseFromOwner() throws Exception {
         AuthResponseDTO dto = authenticateUser("user1@mail.ru");
 
-        mockMvc.perform(post("/posts/buy/{id}", 2L).param("grade", String.valueOf(-3))
+        mockMvc.perform(post("/posts/{id}/buy", 2L).param("grade", String.valueOf(-3))
                         .header(AUTHORIZATION, dto.getToken()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Объявление куплено"));
@@ -138,7 +137,7 @@ public class PostControllerIT extends BaseControllerIT {
         Assertions.assertEquals(3, postRepository.findAll().size());
         Assertions.assertTrue(postRepository.findAll().get(1).isSold());
 
-        mockMvc.perform(post("/posts/buy/{id}", 3L).param("grade", String.valueOf(-3))
+        mockMvc.perform(post("/posts/{id}/buy", 3L).param("grade", String.valueOf(-3))
                         .header(AUTHORIZATION, dto.getToken()))
                 .andExpect(status().isConflict())
                 .andExpect(content().string("Вы не можете купить данное объявление"));
@@ -197,6 +196,74 @@ public class PostControllerIT extends BaseControllerIT {
         Assertions.assertEquals(2, posts.length);
         Assertions.assertEquals("Test 1", posts[1].get("title"));
         Assertions.assertEquals("Test 3", posts[0].get("title"));
+    }
+
+    @Test
+    public void shouldFindFilteredPosts() throws Exception {
+        AuthResponseDTO dto = authenticateUser("user1@mail.ru");
+
+        String response = mockMvc.perform(get("/posts/filter/price/{option}", "less")
+                        .param("price", String.valueOf(800))
+                        .header(AUTHORIZATION, dto.getToken()))
+                .andExpect(status().isFound())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Map<String, String>[] posts = mapper.readValue(response, Map[].class);
+
+        Assertions.assertEquals(2, posts.length);
+        Assertions.assertEquals("Test 3", posts[0].get("title"));
+        Assertions.assertEquals("Test 2", posts[1].get("title"));
+
+        response = mockMvc.perform(get("/posts/filter/date/{option}", "after")
+                        .param("date", "2022-11-07")
+                        .header(AUTHORIZATION, dto.getToken()))
+                .andExpect(status().isFound())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        posts = mapper.readValue(response, Map[].class);
+
+        Assertions.assertEquals(2, posts.length);
+        Assertions.assertEquals("Test 2", posts[0].get("title"));
+        Assertions.assertEquals("Test 1", posts[1].get("title"));
+    }
+
+    @Test
+    public void shouldFindSortedPosts() throws Exception {
+        AuthResponseDTO dto = authenticateUser("user1@mail.ru");
+
+        String response = mockMvc.perform(get("/posts/sort")
+                        .param("field", "price")
+                        .param("order","asc")
+                        .header(AUTHORIZATION, dto.getToken()))
+                .andExpect(status().isFound())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Map<String, String>[] posts = mapper.readValue(response, Map[].class);
+
+        Assertions.assertEquals(3, posts.length);
+        Assertions.assertEquals("Test 2", posts[0].get("title"));
+        Assertions.assertEquals("Test 3", posts[1].get("title"));
+
+        response = mockMvc.perform(get("/posts/sort")
+                        .param("field", "posting date")
+                        .param("order", "asc")
+                        .header(AUTHORIZATION, dto.getToken()))
+                .andExpect(status().isFound())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        posts = mapper.readValue(response, Map[].class);
+
+        Assertions.assertEquals(3, posts.length);
+        Assertions.assertEquals("Test 3", posts[0].get("title"));
+        Assertions.assertEquals("Test 2", posts[1].get("title"));
     }
 
     @Test

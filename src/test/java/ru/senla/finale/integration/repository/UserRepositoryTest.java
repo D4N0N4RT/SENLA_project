@@ -1,4 +1,4 @@
-package ru.senla.finale.unit.repository;
+package ru.senla.finale.integration.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

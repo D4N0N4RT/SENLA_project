@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.senla.dto.CommentDTO;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,11 +26,12 @@ import java.time.LocalDateTime;
 @Builder
 public class Comment {
     @Id
-    @SequenceGenerator(name = "commentsIdSeq",
+    @SequenceGenerator(name = "comments_id_seq",
             sequenceName = "comments_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "commentsIdSeq")
+    @Column(name = "id", updatable = false)
     //@GeneratedValue(strategy = GenerationType.IDENTITY) // For tests
     private Long id;
 

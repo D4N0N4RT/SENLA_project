@@ -15,7 +15,7 @@ public class AuthControllerIT extends BaseControllerIT {
     @Test
     public void shouldRegisterAndAuth() throws Exception {
         String userDto = mapper.writeValueAsString(
-                UserDTO.builder().username("user@mail.ru").password("passW0rd")
+                UserDTO.builder().username("user4@mail.ru").password("passW0rd")
                         .name("Name").surname("surname")
                         .phone("0123456789").build()
         );
@@ -24,7 +24,7 @@ public class AuthControllerIT extends BaseControllerIT {
                         .content(userDto))
                 .andExpect(status().isOk());
         String authDto = mapper.writeValueAsString(
-                AuthDTO.builder().username("user@mail.ru").password("passW0rd").build()
+                AuthDTO.builder().username("user4@mail.ru").password("passW0rd").build()
         );
         String response = mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -36,7 +36,7 @@ public class AuthControllerIT extends BaseControllerIT {
         AuthResponseDTO dto = mapper.readValue(response, AuthResponseDTO.class);
 
         Assertions.assertFalse(dto.getToken().isEmpty());
-        Assertions.assertEquals(dto.getUsername(), "user@mail.ru");
+        Assertions.assertEquals(dto.getUsername(), "user4@mail.ru");
     }
 
     @Test
@@ -57,6 +57,19 @@ public class AuthControllerIT extends BaseControllerIT {
     }
 
     @Test
+    public void shouldNotRegisterWithIncorrectPassword() throws Exception {
+        String userDto = mapper.writeValueAsString(
+                UserDTO.builder().username("user@mail.ru").password("paswd")
+                        .name("Name").surname("surname")
+                        .phone("0123456789").build()
+        );
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userDto))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
     public void shouldNotRegisterWthEmptyBody() throws Exception {
         mockMvc.perform(post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +80,7 @@ public class AuthControllerIT extends BaseControllerIT {
     @Test
     public void shouldNotAuthWithWrongCredentials() throws Exception {
         String userDto = mapper.writeValueAsString(
-                UserDTO.builder().username("user@mail.ru").password("passW0rd")
+                UserDTO.builder().username("user3@mail.ru").password("passW0rd")
                         .name("Name").surname("surname")
                         .phone("0123456789").build()
         );
@@ -76,7 +89,7 @@ public class AuthControllerIT extends BaseControllerIT {
                         .content(userDto))
                 .andExpect(status().isOk());
         String authDto = mapper.writeValueAsString(
-                AuthDTO.builder().username("user@mail.ru").password("passW0rD").build()
+                AuthDTO.builder().username("user3@mail.ru").password("passW0rD").build()
         );
         mockMvc.perform(post("/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
