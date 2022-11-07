@@ -43,7 +43,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testSave() {
+    void shouldSave() {
         Post post = Post.builder().title("Test").description("Test")
                 .price(100).postingDate(LocalDate.now()).category(ESTATE).build();
         Assertions.assertNull(post.getId());
@@ -52,7 +52,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testUpdate() {
+    void shouldUpdate() {
         Post post = Post.builder().title("Test").description("Test")
                 .price(100).postingDate(LocalDate.now()).category(ESTATE).build();
         Assertions.assertNull(post.getId());
@@ -70,7 +70,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testDelete() {
+    void shouldDelete() {
         Post post = Post.builder().title("Test").description("Test")
                 .price(100).postingDate(LocalDate.now()).category(ESTATE).build();
         Assertions.assertNull(post.getId());
@@ -85,7 +85,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testFindAllByUser() {
+    void shouldFindAllByUser() {
         User us = User.builder().username("mail@mail.ru").password("pass")
                 .rating(2).build();
         userRepository.save(us);
@@ -105,7 +105,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testFindAllByCategory() {
+    void shouldFindAllByCategory() {
         User us = User.builder().username("mail@mail.ru").password("pass")
                 .rating(2).build();
         userRepository.save(us);
@@ -126,7 +126,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testFindAllByPriceGreaterThan() {
+    void shouldFindAllByPriceGreaterThan() {
         User us = User.builder().username("mail@mail.ru").password("pass")
                 .rating(2).build();
         userRepository.save(us);
@@ -151,7 +151,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testFindAllByPriceLessThan() {
+    void shouldFindAllByPriceLessThan() {
         User us = User.builder().username("mail@mail.ru").password("pass")
                 .rating(2).build();
         userRepository.save(us);
@@ -178,7 +178,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testFindAllByPostingDateIsAfter() {
+    void shouldFindAllByPostingDateIsAfter() {
         User us = User.builder().username("mail@mail.ru").password("pass")
                 .rating(2).build();
         userRepository.save(us);
@@ -206,7 +206,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testFindAllByPostingDateIsBefore() {
+    void shouldFindAllByPostingDateIsBefore() {
         User us = User.builder().username("mail@mail.ru").password("pass")
                 .rating(2).build();
         userRepository.save(us);
@@ -234,7 +234,7 @@ public class PostRepositoryTest {
     }
 
     @Test
-    void testFindAllByTitleContaining() {
+    void shouldFindAllByTitleContaining() {
         User us = User.builder().username("mail@mail.ru").password("pass")
                 .rating(2).build();
         userRepository.save(us);

@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.senla.dto.AuthDTO;
-import ru.senla.dto.IUserDTO;
+import ru.senla.dto.AuthResponseDTO;
 import ru.senla.dto.UpdateUserDTO;
 import ru.senla.dto.UserDTO;
 import ru.senla.exception.DuplicateUsernameException;
@@ -27,10 +26,6 @@ import ru.senla.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/auth")
@@ -63,7 +58,7 @@ public class AuthController {
             User user = userDTO.toUser();
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.create(user);
-            return new ResponseEntity<>("Вы успешно зарегистрировались в системе", HttpStatus.CREATED);
+            return new ResponseEntity<>("Вы успешно зарегистрировались в системе", HttpStatus.OK);
         }
     }
 
@@ -73,9 +68,9 @@ public class AuthController {
         manager.authenticate(new UsernamePasswordAuthenticationToken(username, request.getPassword()));
         User user = (User) userService.loadUserByUsername(request.getUsername());
         String token = jwtTokenProvider.createToken(username, user.getRole().name());
-        Map<Object, Object> response = new HashMap<>();
-        response.put("username", user.getUsername());
-        response.put("token", token);
+        AuthResponseDTO response = AuthResponseDTO.builder()
+                        .username(user.getUsername()).token(token)
+                        .build();
         return ResponseEntity.ok(response);
     }
 

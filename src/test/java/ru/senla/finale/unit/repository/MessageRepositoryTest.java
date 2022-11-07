@@ -43,7 +43,7 @@ public class MessageRepositoryTest {
     }
 
     @Test
-    void testSave() {
+    void shouldSave() {
         User us1 = User.builder().username("mail@mail.ru").password("pass").build();
         User us2 = User.builder().username("mail2@mail.ru").password("pass").build();
         Message mes = Message.builder().sender(us1).receiver(us2).content("test")
@@ -54,7 +54,7 @@ public class MessageRepositoryTest {
     }
 
     @Test
-    void testConversation() {
+    void shouldReturnConversation() {
         User us1 = User.builder().username("mail@mail.ru").password("pass").build();
         User us2 = User.builder().username("mail2@mail.ru").password("pass").build();
         userRepository.save(us1);

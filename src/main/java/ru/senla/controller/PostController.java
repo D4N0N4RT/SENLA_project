@@ -33,6 +33,7 @@ import ru.senla.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -82,16 +83,16 @@ public class PostController {
         return new ResponseEntity<>(dtos, HttpStatus.FOUND);
     }
 
-    @GetMapping("/category/{category}")
-    public ResponseEntity<?> getAllByCategory(@PathVariable(name="category") @NotNull Category category) throws EmptyResponseException {
+    @GetMapping("/category")
+    public ResponseEntity<?> getAllByCategory(@RequestParam(name="category") @NotNull Category category) throws EmptyResponseException {
         List<Post> posts = postService.findAllByCategory(category);
         List<GetPostDTO> dtos = posts.stream().map(Post::fromPost).collect(Collectors.toList());
         return new ResponseEntity<>(dtos, HttpStatus.FOUND);
     }
 
-    @GetMapping("/sort/{field}/{order}")
-    public ResponseEntity<?> getAllSort(@PathVariable(name="field") @NotBlank String field,
-                                          @PathVariable(name="order") @NotBlank String order) throws EmptyResponseException {
+    @GetMapping("/sort")
+    public ResponseEntity<?> getAllSort(@RequestParam(name="field") @NotBlank String field,
+                                          @RequestParam(name="order") @NotBlank String order) throws EmptyResponseException {
         List<Post> posts = postService.findAllFilter(field, order);
         List<GetPostDTO> dtos = posts.stream().map(Post::fromPost).collect(Collectors.toList());
         return new ResponseEntity<>(dtos, HttpStatus.FOUND);
@@ -135,7 +136,7 @@ public class PostController {
         return new ResponseEntity<>(dto, HttpStatus.FOUND);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> createPost(@RequestBody @Valid CreatePostDTO dto, HttpServletRequest request) {
         String token = jwtTokenProvider.resolveToken(request);
         String username = jwtTokenProvider.getUsername(token);
@@ -168,7 +169,7 @@ public class PostController {
         User user = (User) userService.loadUserByUsername(username);
         Post post = postService.findById(id).orElseThrow(() -> new WrongIdException("Неправльный id"));
         if (Objects.equals(post.getUser().getUsername(), user.getUsername())) {
-            if (dto.getPrice() < 1)
+            if (dto.getPrice() < 0)
                 throw new PriceValidException("Ошибка валидации, проверьте введенные данные\nОшибка: Цена должна быть не меньше 1");
             postMapper.updatePostFromDto(dto, post);
             postService.update(post);
@@ -178,7 +179,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/buy/{id}")
+    @PostMapping("/{id}/buy")
     public ResponseEntity<?> buyPost(@PathVariable(name="id") long id, @RequestParam int grade, HttpServletRequest request)
             throws WrongIdException, WrongAuthorityException {
         String token = jwtTokenProvider.resolveToken(request);
@@ -194,7 +195,7 @@ public class PostController {
             postService.updatePostSetRatingForUser(seller.getRating(), seller);
             return new ResponseEntity<>("Объявление куплено", HttpStatus.OK);
         } else {
-            throw new WrongAuthorityException("Вы не можете изменить данное объявление");
+            throw new WrongAuthorityException("Вы не можете купить данное объявление");
         }
     }
 
@@ -207,7 +208,7 @@ public class PostController {
         User user = (User) userService.loadUserByUsername(username);
         Post post = postService.findById(id).orElseThrow(() -> new WrongIdException("Неправльный id"));
         if (Objects.equals(post.getUser().getUsername(), user.getUsername())) {
-            post.setPromotion(promotion);
+            post.setPromotion(post.getPromotion() + promotion);
             postService.update(post);
             return new ResponseEntity<>("Вы проплатили отображение объявления в топе выдачи", HttpStatus.OK);
         } else {

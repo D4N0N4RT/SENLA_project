@@ -37,7 +37,7 @@ public class User implements UserDetails {
             sequenceName = "users_id_seq",
             allocationSize = 1
     )
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) // For tests
     private Long id;
 
     @Column(name = "email", unique = true)

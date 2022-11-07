@@ -1,5 +1,6 @@
 package ru.senla.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import ru.senla.model.Role;
 import ru.senla.model.User;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
+@Builder
 public class UserDTO implements IUserDTO {
     @NotBlank(message = "Почта (имя пользователя) не может быть пустой")
     @Size(max = 50, message = "Почта не может превышать 50 символов")

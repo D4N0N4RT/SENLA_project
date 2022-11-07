@@ -1,5 +1,7 @@
 package ru.senla.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Category {
     ESTATE("Недвижимость"),
     TRANSPORT("Транспорт"),
@@ -15,6 +17,7 @@ public enum Category {
         name = s;
     }
 
+    @JsonValue
     public String getName() {
         return name;
     }

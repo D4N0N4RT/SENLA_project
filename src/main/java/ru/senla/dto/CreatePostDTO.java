@@ -1,6 +1,8 @@
 package ru.senla.dto;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import ru.senla.model.Category;
 import ru.senla.model.Post;
 import ru.senla.model.User;
@@ -11,7 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Builder
 public class CreatePostDTO {
     @NotBlank(message = "Название не может быть пустым")
     @Size(max = 100, message = "Название не может быть длинее 100 символов")

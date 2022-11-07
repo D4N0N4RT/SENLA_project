@@ -34,7 +34,7 @@ public class Post {
             allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postsIdSeq")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) // For tests
     private Long id;
 
     @JsonBackReference

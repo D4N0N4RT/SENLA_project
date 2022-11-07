@@ -107,7 +107,7 @@ public class MessageControllerTest {
     }
 
     @Test
-    public void testSendMessage() throws Exception {
+    public void shouldSendMessage() throws Exception {
         //given(messageService.create(any(Message.class)))
                 //.willAnswer((invocation) -> invocation.getArgument(0));
 
@@ -126,7 +126,7 @@ public class MessageControllerTest {
     }
 
     @Test
-    public void testGetConversation() throws Exception {
+    public void shouldGetConversation() throws Exception {
         given(messageService.getConversation(any(User.class), any(User.class)))
                 .willReturn(messages);
 

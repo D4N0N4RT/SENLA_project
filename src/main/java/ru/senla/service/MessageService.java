@@ -28,8 +28,6 @@ public class MessageService {
         List<Message> messages = messageRepository.findConversation(user1, user2, Sort.by("time"));
         if (messages.isEmpty())
             throw new EmptyResponseException("Диалог с данным пользователем пуст");
-        /*messages.addAll(messages1);
-        messages.sort(Comparator.comparing(Message::getTime));*/
         return messages;
     }
 

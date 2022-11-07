@@ -50,7 +50,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    void testSave() {
+    void shouldSave() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Post post = Post.builder().title("Test").description("Test")
                 .price(100).postingDate(LocalDate.now()).category(ESTATE).build();
@@ -62,7 +62,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    void testDelete() {
+    void shouldDelete() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Post post = Post.builder().title("Test").description("Test")
                 .price(100).postingDate(LocalDate.now()).category(ESTATE).build();
@@ -80,7 +80,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    void testGetByUser() {
+    void shouldReturnByUser() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Post post = Post.builder().title("Test").description("Test")
                 .price(100).postingDate(LocalDate.now()).category(ESTATE).build();
@@ -97,7 +97,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    void testGetByPost() {
+    void shouldReturnByPost() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Post post = Post.builder().title("Test").description("Test")
                 .price(100).postingDate(LocalDate.now()).category(ESTATE).build();

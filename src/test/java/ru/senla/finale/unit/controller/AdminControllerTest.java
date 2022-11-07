@@ -98,7 +98,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void testGetAllUsers() throws Exception {
+    public void shouldReturnAllUsers() throws Exception {
         given(userService.getAll())
                 .willReturn(users);
 
@@ -111,7 +111,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void testDeleteUser() throws Exception {
+    public void shouldDeleteUser() throws Exception {
         given(userService.loadUserByUsername("user1"))
                 .willReturn(users.get(0));
 
@@ -124,7 +124,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void testDeletePost() throws Exception {
+    public void shouldDeletePost() throws Exception {
         given(postService.findById(1L))
                 .willReturn(Optional.of(Post.builder().id(1L).title("Test").build()));
 
@@ -137,7 +137,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void testDeleteComment() throws Exception {
+    public void shouldDeleteComment() throws Exception {
         given(commentService.findById(1L))
                 .willReturn(Optional.of(Comment.builder().id(1L).content("Test").build()));
 

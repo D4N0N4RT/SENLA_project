@@ -35,7 +35,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testSave() {
+    void shouldSave() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Assertions.assertNull(us.getId());
         underTest.save(us);
@@ -43,7 +43,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testUpdate() {
+    void shouldUpdate() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Assertions.assertNull(us.getId());
         underTest.save(us);
@@ -59,7 +59,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testDelete() {
+    void shouldDelete() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
         Assertions.assertNull(us.getId());
         underTest.save(us);
@@ -73,7 +73,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void testFindByUsername() {
+    void shouldFindByUsername() {
         User us = User.builder().username("mail@mail.ru").password("pass").build();
 
         underTest.save(us);

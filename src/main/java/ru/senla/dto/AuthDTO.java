@@ -1,10 +1,12 @@
 package ru.senla.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Getter
+@Builder
 public class AuthDTO {
     @NotBlank(message = "Почта (имя пользователя) не может быть пустой")
     private String username;

@@ -30,7 +30,7 @@ public class Comment {
             allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "commentsIdSeq")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) // For tests
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
